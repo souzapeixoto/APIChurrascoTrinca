@@ -4,14 +4,16 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210923010212_opcao.observacoes_int_to_string")]
+    partial class opcaoobservacoes_int_to_string
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,30 @@ namespace Infrastructure.Migrations
                     b.ToTable("Churrascos");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Convidado", b =>
+            modelBuilder.Entity("Domain.Entities.Opcao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ChurrascoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChurrascoId");
+
+                    b.ToTable("Opcoes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Participante", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,30 +95,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("OpcaoId");
 
-                    b.ToTable("Convidados");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Opcao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ChurrascoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChurrascoId");
-
-                    b.ToTable("Opcoes");
+                    b.ToTable("Participantes");
                 });
 
             modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
@@ -336,10 +338,19 @@ namespace Infrastructure.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Convidado", b =>
+            modelBuilder.Entity("Domain.Entities.Opcao", b =>
                 {
                     b.HasOne("Domain.Entities.Churrasco", "Churrasco")
-                        .WithMany("Convidados")
+                        .WithMany("Opcoes")
+                        .HasForeignKey("ChurrascoId");
+
+                    b.Navigation("Churrasco");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Participante", b =>
+                {
+                    b.HasOne("Domain.Entities.Churrasco", "Churrasco")
+                        .WithMany("Participantes")
                         .HasForeignKey("ChurrascoId");
 
                     b.HasOne("Domain.Entities.Opcao", "Opcao")
@@ -349,15 +360,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Churrasco");
 
                     b.Navigation("Opcao");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Opcao", b =>
-                {
-                    b.HasOne("Domain.Entities.Churrasco", "Churrasco")
-                        .WithMany("Opcoes")
-                        .HasForeignKey("ChurrascoId");
-
-                    b.Navigation("Churrasco");
                 });
 
             modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
@@ -422,9 +424,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Churrasco", b =>
                 {
-                    b.Navigation("Convidados");
-
                     b.Navigation("Opcoes");
+
+                    b.Navigation("Participantes");
                 });
 
             modelBuilder.Entity("Domain.Entities.Usuario", b =>

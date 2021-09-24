@@ -1,4 +1,4 @@
-﻿using Domain.DTO;
+﻿using Application.DTO;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Infrastructure.Data;
@@ -126,9 +126,9 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<DTOAutentication> GetTokenAsync(DTOLogin model)
+        public async Task<Autentication> GetTokenAsync(Login model)
         {
-            var authenticationModel = new DTOAutentication();
+            var authenticationModel = new Autentication();
             var user = await _userManager.FindByNameAsync(model.Email);
             if (user == null)
             {
@@ -197,9 +197,9 @@ namespace Infrastructure.Repositories
             return jwtSecurityToken;
         }
 
-        public async Task<DTOAutentication> RefreshTokenAsync(string token)
+        public async Task<Autentication> RefreshTokenAsync(string token)
         {
-            var authenticationModel = new DTOAutentication();
+            var authenticationModel = new Autentication();
 
             var user = _context.Users.Include(x => x.RefreshTokens).SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
             if (user == null)

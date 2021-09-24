@@ -1,8 +1,6 @@
 
 using AutoMapper;
-using Domain.DTO;
 using Newtonsoft.Json;
-using Infrastructure.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +20,8 @@ using Infrastructure.CrossCutting;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Application.Mapper;
+using Application.DTO;
 
 namespace APIChurrascoTrinca
 {
@@ -42,7 +42,7 @@ namespace APIChurrascoTrinca
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new UsuarioProfile());
-                mc.AddProfile(new ParticipanteProfile());
+                mc.AddProfile(new ConvidadoProfile());
                 mc.AddProfile(new OpcaoProfile());
                 mc.AddProfile(new ChurrascoProfile());
             });

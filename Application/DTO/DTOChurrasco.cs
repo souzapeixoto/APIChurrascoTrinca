@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Domain.DTO
+namespace Application.DTO
 {
     public class DTOChurrasco
     {
@@ -10,10 +10,10 @@ namespace Domain.DTO
         public string Descricao { get; set; }
         public string Observacoes { get; set; }
         public  ICollection<DTOOpcao> Opcoes { get; set; }
-        public ICollection<DTOParticipante> Participantes { get; set; }
-        public int TotalDeParticipantes { get; }
+        public ICollection<DTOConvidado> Convidados { get; set; }
+        public int TotalDeConvidados { get; set; }
 
-        public decimal ValorArrecadado { get; }
-        
+        public decimal ValorArrecadado { get; set; }
+
     }
 }

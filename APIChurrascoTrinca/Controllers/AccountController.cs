@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using Domain.DTO;
+﻿using Application.DTO;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Infrastructure.UnitOfWork;
@@ -34,11 +34,16 @@ namespace APIChurrascoTrinca.Controllers
         }
 
         [HttpPost("token")]
-        public async Task<IActionResult> GetTokenAsync(DTOLogin model)
+        public async Task<IActionResult> GetTokenAsync(Login model)
         {
             try
             {
                 var result = await _repositoryAuth.GetTokenAsync(model);
+                if (!result.IsAuthenticated)
+                {
+                    return BadRequest(result.Message);
+                }
+
                 SetRefreshTokenInCookie(result.RefreshToken);
                 _unitOfWork.Commit();
                 return Ok(result);
@@ -46,7 +51,7 @@ namespace APIChurrascoTrinca.Controllers
             catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return BadRequest();
+                return BadRequest("Login inválido. "+ex.Message);
             }
         }
 
@@ -57,7 +62,8 @@ namespace APIChurrascoTrinca.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState.Values.SelectMany(x => x.Errors));
+                var erros = ModelState.Values.SelectMany(x => x.Errors);
+                return BadRequest(erros.FirstOrDefault().ErrorMessage);
             }
             var usuario = _map.Map<Usuario>(userModel);
             try

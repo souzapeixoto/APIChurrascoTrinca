@@ -15,7 +15,7 @@ namespace Infrastructure.Data
 
         public DbSet<Churrasco> Churrascos { get; set; }
         public DbSet<Opcao> Opcoes { get; set; }
-        public DbSet<Participante> Participantes { get; set; }
+        public DbSet<Convidado> Convidados { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

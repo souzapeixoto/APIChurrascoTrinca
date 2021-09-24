@@ -4,14 +4,16 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210923023734_participanto_to_convidado")]
+    partial class participanto_to_convidado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +72,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("OpcaoId");
 
-                    b.ToTable("Convidados");
+                    b.ToTable("Participantes");
                 });
 
             modelBuilder.Entity("Domain.Entities.Opcao", b =>
@@ -339,7 +341,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Convidado", b =>
                 {
                     b.HasOne("Domain.Entities.Churrasco", "Churrasco")
-                        .WithMany("Convidados")
+                        .WithMany("Participantes")
                         .HasForeignKey("ChurrascoId");
 
                     b.HasOne("Domain.Entities.Opcao", "Opcao")
@@ -422,9 +424,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Churrasco", b =>
                 {
-                    b.Navigation("Convidados");
-
                     b.Navigation("Opcoes");
+
+                    b.Navigation("Participantes");
                 });
 
             modelBuilder.Entity("Domain.Entities.Usuario", b =>

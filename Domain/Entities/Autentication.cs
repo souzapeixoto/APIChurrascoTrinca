@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Domain.DTO
+namespace Domain.Entities
 {
-    public class DTOAutentication
+    public class Autentication
     {
         public string Message { get; set; }
         public bool IsAuthenticated { get; set; }

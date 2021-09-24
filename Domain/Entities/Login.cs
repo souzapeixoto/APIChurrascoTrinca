@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Domain.DTO
+namespace Domain.Entities
 {
-    public class DTOLogin
+    public class Login
     {
         [Required]
         public string Email { get; set; }

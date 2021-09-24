@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class Participante
+    public class Convidado
     {
         public int Id { get; set; }
         public string Nome { get; set; }

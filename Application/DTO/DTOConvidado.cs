@@ -1,6 +1,6 @@
-﻿namespace Domain.DTO
+﻿namespace Application.DTO
 {
-    public class DTOParticipante
+    public class DTOConvidado
     {
         public int Id { get; set; }
         public string Nome { get; set; }
